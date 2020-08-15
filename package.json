@@ -1,0 +1,14 @@
+{
+  "name": "ledstripe",
+  "version": "1.0.0",
+  "description": "ledstripe controller",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marcel Bankmann",
+  "license": "ISC",
+  "dependencies": {
+    "pigpio": "^3.2.3"
+  }
+}
