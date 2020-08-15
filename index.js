@@ -9,20 +9,63 @@ const redLed = new Gpio(RED_PIN, {mode: Gpio.OUTPUT});
 const greenLed = new Gpio(GREEN_PIN, {mode: Gpio.OUTPUT});
 const blueLed = new Gpio(BLUE_PIN, {mode: Gpio.OUTPUT});
 
+const BLACK = [0, 0, 0];
+const RED   = [255, 0, 0];
+const GREEN = [0, 255, 0];
+const BLUE  = [0, 0, 255];
+const WHITE = [255, 255, 255];
 
-function setColor(r,g,b) {
-
+function fixGreen(value) {
+  return value;
 }
- 
-let dutyCycle = 0;
- 
-setInterval(() => {
-  redLed.pwmWrite(dutyCycle);
-  greenLed.pwmWrite(Math.round(dutyCycle * 0.01));
-  blueLed.pwmWrite(dutyCycle);
- 
-  dutyCycle += 5;
-  if (dutyCycle > 255) {
-    dutyCycle = 0;
+
+function setColor(color) {
+  redLed.pwmWrite(color[0]);
+  greenLed.pwmWrite(fixGreen(color[1]));
+  blueLed.pwmWrite(color[2]);
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function fadeFromColorToColor(from, to, steps, speed) {
+  const deltaR = to[0] - from[0];
+  const deltaG = to[1] - from[1];
+  const deltaB = to[2] - from[2];
+  const deltaRStep = deltaR / steps;
+  const deltaGStep = deltaG / steps;
+  const deltaBStep = deltaB / steps;
+  let curR = from[0];
+  let curG = from[1];
+  let curB = from[2];
+
+  for(let i=0; i<steps; i++) {
+    // console.log(curR, curG, curB);
+    setColor([
+      Math.round(curR),
+      Math.round(curG),
+      Math.round(curB)
+    ]);
+
+    curR += deltaRStep;
+    curG += deltaGStep;
+    curB += deltaBStep;
+
+    await sleep(speed);
   }
-}, 200);
+}
+
+function ranVal() { return Math.floor(Math.random() * 256); }
+
+async function run() {
+  let curColor = BLACK.slice();
+
+  while(true) {
+    const toColor = [ranVal(), ranVal(), ranVal()];
+    await fadeFromColorToColor(curColor, toColor, 128, 10);
+    curColor = toColor;
+  }
+}
+
+run();
