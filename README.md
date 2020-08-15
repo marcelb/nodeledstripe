@@ -9,7 +9,7 @@ Install Raspberry Pi Node LED Stripe
 5) Aquire 5V Power Supply with Connector Jack Adaptor
 6) Aquire Soldering Equipment, some wires and stuff
 7) Solder this:
-[Wiring](/wiring.jpg)
+[Wiring](/wiring.png)
 
 # Install software
 1) latest raspberry pi image + touch ssh
