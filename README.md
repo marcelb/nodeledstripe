@@ -22,7 +22,7 @@ Everything on your own risk. You can damage your hardware with this.
 4) sudo apt-get upgrade
 5) sudo apt-get purge node nodejs npm
 6) sudo apt-get install build-essential python-dev unzip wget pigpio pigpiod git
-7) curl -sL https://deb.nodesource.com/setup_12.x | sudo bash - # This might be different on your system, some Pis only support older versions. (e.g. uname -m = armv6l needs to download the tarball instead)
+7) curl -sL https://deb.nodesource.com/setup_12.x | sudo bash - # This might be different on your system, some Pis only support older versions. (e.g. uname -m = armv6l needs to download the tarball instead) More info: https://linuxize.com/post/how-to-install-node-js-on-raspberry-pi/
 8) sudo apt install nodejs
 9) Clone this repo.
 10) npm i
