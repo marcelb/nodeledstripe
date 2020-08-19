@@ -1,5 +1,6 @@
 const Gpio = require('pigpio').Gpio;
 
+
 const RED_PIN = 17;
 const GREEN_PIN = 22;
 const BLUE_PIN = 24;
@@ -58,12 +59,15 @@ async function fadeFromColorToColor(from, to, steps, speed) {
 function ranVal() { return Math.floor(Math.random() * 256); }
 
 async function run() {
-  let curColor = BLACK.slice();
 
   while(true) {
-    const toColor = [ranVal(), ranVal(), ranVal()];
-    await fadeFromColorToColor(curColor, toColor, 128, 10);
-    curColor = toColor;
+    console.log('Testing RED...');
+    await fadeFromColorToColor(BLACK, RED, 128, 10);
+    console.log('Testing GREEN...');
+    await fadeFromColorToColor(BLACK, GREEN, 128, 10);
+    console.log('Testing BLUE...');
+    await fadeFromColorToColor(BLACK, BLUE, 128, 10);
+    console.log('Done... Repeat...');
   }
 }
 
