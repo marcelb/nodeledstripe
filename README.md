@@ -28,3 +28,5 @@ Everything on your own risk. You can damage your hardware with this.
 10) npm i
 11) sudo node index.js
 
+# Additional Notes
+In the sub dir Arduino is a version for the Arduino.
