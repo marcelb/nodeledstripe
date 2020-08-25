@@ -13,15 +13,21 @@ const RED   = [255, 0, 0];
 const GREEN = [0, 255, 0];
 const BLUE  = [0, 0, 255];
 const WHITE = [255, 255, 255];
+const MAX_BRIGHTNESS = 255;
 
-function fixGreen(value) {
-  return value;
+function decimalLinearInterpolation(oldValue, oldMax, newMax) {
+  return Math.round(oldValue * newMax  / oldMax);
+}
+
+function reCalculate(value, newMax) {
+  const dimmed = decimalLinearInterpolation(value, 255, MAX_BRIGHTNESS);
+  return decimalLinearInterpolation(dimmed, MAX_BRIGHTNESS, newMax); 
 }
 
 function setColor(color) {
-  redLed.pwmWrite(color[0]);
-  greenLed.pwmWrite(fixGreen(color[1]));
-  blueLed.pwmWrite(color[2]);
+  redLed.pwmWrite(reCalculate(color[0], 255));
+  greenLed.pwmWrite(reCalculate(color[1], 150));
+  blueLed.pwmWrite(reCalculate(color[2], 255));
 }
 
 function sleep(ms) {
@@ -40,7 +46,6 @@ async function fadeFromColorToColor(from, to, steps, speed) {
   let curB = from[2];
 
   for(let i=0; i<steps; i++) {
-    // console.log(curR, curG, curB);
     setColor([
       Math.round(curR),
       Math.round(curG),
@@ -62,7 +67,7 @@ async function run() {
 
   while(true) {
     const toColor = [ranVal(), ranVal(), ranVal()];
-    await fadeFromColorToColor(curColor, toColor, 128, 10);
+    await fadeFromColorToColor(curColor, toColor, 128, 50);
     curColor = toColor;
   }
 }
